@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import type { InputSize } from "./types";
+import type { InputSize, InputType } from "./types";
 
 type Props = {
   modelValue: string | number | null;
@@ -8,6 +8,7 @@ type Props = {
   max: number | null;
   disabled: boolean;
   size: InputSize;
+  type: InputType;
 };
 
 const emit = defineEmits(["update:modelValue"]);
@@ -20,13 +21,16 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const sizeClass = computed(() => `base-input--${props.size}`);
+const typeClass = computed(() => `base-input--${props.type}`);
 </script>
+
 <template>
   <input
-    type="text"
+    :type="props.type"
+    :inputmode="props.type === 'number' ? 'numeric' : 'text'"
     placeholder="Type anything"
     :value="props.modelValue"
-    :class="['base-input', sizeClass]"
+    :class="['base-input', sizeClass, typeClass]"
     @input="(event) => emit('update:modelValue', (event.target as HTMLInputElement)?.value)"
   />
 </template>
@@ -52,9 +56,16 @@ const sizeClass = computed(() => `base-input--${props.size}`);
     box-shadow: $shadow;
   }
 
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
   &--square-big {
-    width: 150px;
-    height: 150px;
+    text-align: center;
+    width: 160px;
+    height: 160px;
     font-size: 6rem;
   }
 }

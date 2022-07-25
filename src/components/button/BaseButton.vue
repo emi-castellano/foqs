@@ -3,7 +3,7 @@ import { computed } from "vue";
 import type { ButtonSize, ButtonType } from "./types";
 
 type Props = {
-  text: string;
+  text?: string;
   type: ButtonType;
   size: ButtonSize;
   disabled: boolean;
@@ -21,10 +21,11 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const typeClass = computed(() => `btn--${props.type}`);
+const sizeClass = computed(() => `btn--${props.size}`);
 </script>
 
 <template>
-  <button :class="['btn', typeClass]">
+  <button :class="['btn', typeClass, sizeClass]">
     <span>{{ text }}</span>
     <font-awesome-icon v-if="icon" :icon="props.icon" />
   </button>
@@ -78,6 +79,17 @@ const typeClass = computed(() => `btn--${props.type}`);
 
   span {
     font-size: 1.6rem;
+  }
+
+  &--round {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+
+    .svg-inline--fa {
+      width: 1.3rem;
+      height: 1.3rem;
+    }
   }
 }
 </style>
