@@ -9,9 +9,17 @@ import {
   faChevronLeft,
   faChevronUp,
   faChevronDown,
+  faPause,
 } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faPlay, faSpinner, faChevronLeft, faChevronUp, faChevronDown);
+library.add(
+  faPlay,
+  faSpinner,
+  faChevronLeft,
+  faChevronUp,
+  faChevronDown,
+  faPause
+);
 
 import "./assets/main.scss";
 

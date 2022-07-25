@@ -24,8 +24,9 @@ const restTime = ref(null);
           type="number"
           size="square-big"
           v-model="focusTime"
-          :min="2"
-          :max="2"
+          :max-length="2"
+          :min="20"
+          :max="60"
           placeholder="00"
         />
         <BaseButton
@@ -45,8 +46,9 @@ const restTime = ref(null);
           type="number"
           size="square-big"
           v-model="restTime"
-          :min="2"
-          :max="2"
+          :max-length="2"
+          :min="5"
+          :max="15"
           placeholder="00"
         />
         <BaseButton

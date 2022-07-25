@@ -4,8 +4,9 @@ import type { InputSize, InputType } from "./types";
 
 type Props = {
   modelValue: string | number | null;
-  min: number | null;
-  max: number | null;
+  min?: number;
+  max?: number;
+  maxLength: number | undefined;
   disabled: boolean;
   size: InputSize;
   type: InputType;
@@ -15,8 +16,7 @@ const emit = defineEmits(["update:modelValue"]);
 
 const props = withDefaults(defineProps<Props>(), {
   value: "",
-  min: null,
-  max: null,
+  maxLength: undefined,
   disabled: false,
 });
 
@@ -31,6 +31,9 @@ const typeClass = computed(() => `base-input--${props.type}`);
     placeholder="Type anything"
     :value="props.modelValue"
     :class="['base-input', sizeClass, typeClass]"
+    :min="props.min"
+    :max="props.max"
+    :maxlength="props.maxLength"
     @input="(event) => emit('update:modelValue', (event.target as HTMLInputElement)?.value)"
   />
 </template>
