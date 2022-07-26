@@ -2,7 +2,7 @@
   <div class="base-timer">
     <div class="time-info">
       <span class="time-left">00:00</span>
-      <span class="time-status">All ready!</span>
+      <span class="time-status">All set 👌</span>
     </div>
   </div>
 </template>

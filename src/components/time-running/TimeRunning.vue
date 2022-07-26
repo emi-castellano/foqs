@@ -7,7 +7,7 @@ import PlayButton from "../play-button/PlayButton.vue";
   <section class="time-running">
     <h1>Are you ready to be <strong>productive</strong>?</h1>
     <div class="timer-wrapper">
-      <!-- <BaseTimer /> -->
+      <BaseTimer />
       <PlayButton />
     </div>
   </section>
@@ -19,5 +19,12 @@ import PlayButton from "../play-button/PlayButton.vue";
   flex-direction: column;
   align-items: center;
   gap: 3rem;
+
+  .timer-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+  }
 }
 </stype>
