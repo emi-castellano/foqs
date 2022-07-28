@@ -81,6 +81,15 @@ const sizeClass = computed(() => `btn--${props.size}`);
     font-size: 1.6rem;
   }
 
+  &--small {
+    width: 10rem;
+    height: 3rem;
+
+    span {
+      font-size: 1.3rem;
+    }
+  }
+
   &--round {
     width: 3rem;
     height: 3rem;

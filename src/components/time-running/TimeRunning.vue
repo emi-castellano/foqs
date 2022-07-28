@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import BaseTimer from "../timer/BaseTimer.vue";
-import PlayButton from "../play-button/PlayButton.vue";
 </script>
 
 <template>
@@ -8,7 +7,6 @@ import PlayButton from "../play-button/PlayButton.vue";
     <h1>Are you ready to be <strong>productive</strong>?</h1>
     <div class="timer-wrapper">
       <BaseTimer />
-      <PlayButton />
     </div>
   </section>
 </template>
@@ -18,7 +16,7 @@ import PlayButton from "../play-button/PlayButton.vue";
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3rem;
+  gap: 10rem;
 
   .timer-wrapper {
     display: flex;
