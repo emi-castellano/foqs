@@ -1,18 +1,30 @@
 <script setup lang="ts">
 import { useAppStore } from "@/pinia/appStore";
-import { storeToRefs } from "pinia";
-import { computed, onMounted, ref, toRefs } from "vue";
+import { computed, onUnmounted, ref } from "vue";
 import BaseButton from "../button/BaseButton.vue";
 
 const appStore = useAppStore();
-const time = ref(appStore.focusTime * 60);
+const time = ref(
+  appStore.isOnFocus ? appStore.focusTime * 60 : appStore.restTime * 60
+);
 const timer = ref(0);
 
 const playingClass = computed(() => (appStore.isPlaying ? "playing" : ""));
-const animationPausedClass = computed(() =>
-  !appStore.isPlaying ? "paused" : ""
-);
+
+const animationPausedClass = computed(() => {
+  if (
+    appStore.isReadyToStart ||
+    (!appStore.isPlaying && appStore.isOnFocus) ||
+    (!appStore.isPlaying && appStore.isOnRest)
+  ) {
+    return "paused";
+  } else {
+    return "";
+  }
+});
+
 const buttonText = computed(() => (appStore.isPlaying ? "Stop" : "Start"));
+
 const timeTypeText = computed(() => {
   if (appStore.isOnFocus) {
     return "Time to focus";
@@ -33,11 +45,12 @@ const timeLeftText = computed(() => {
 });
 
 const onClick = () => {
-  appStore.toggleIsPlaying();
   if (appStore.isPlaying) {
-    startTimer();
-  } else {
     stopTimer();
+    appStore.stopPlaying();
+  } else {
+    startTimer();
+    appStore.startPlaying();
   }
 };
 
@@ -47,16 +60,22 @@ const startTimer = () => {
       if (time.value > 0) {
         time.value--;
       } else {
-        clearInterval(timer.value);
+        stopTimer();
+        appStore.showRestStep();
       }
     }, 1000);
   }
 };
 
 const stopTimer = () => {
+  appStore.stopPlaying();
   clearInterval(timer.value);
   timer.value = 0;
 };
+
+onUnmounted(() => {
+  clearInterval(timer.value);
+});
 </script>
 
 <template>

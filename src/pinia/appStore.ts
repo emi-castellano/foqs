@@ -5,9 +5,9 @@ export type ActiveStep = "time-config" | "time-running" | "time-finished";
 
 export const useAppStore = defineStore("appStore", {
   state: (): AppState => ({
-    focusTime: 2,
-    restTime: 0,
-    activeStep: "time-config",
+    focusTime: 1,
+    restTime: 1,
+    activeStep: "time-running",
     isPlaying: false,
     isOnFocus: false,
     isOnRest: false,
@@ -23,28 +23,22 @@ export const useAppStore = defineStore("appStore", {
       this.focusTime = focusTime;
       this.restTime = restTime;
     },
-    toggleIsPlaying() {
-      // First time starting the timer
+    stopPlaying() {
+      this.isPlaying = false;
+    },
+    startPlaying() {
+      this.isPlaying = true;
+
       if (this.isReadyToStart && !this.isPlaying) {
         this.isOnFocus = true;
       }
-
-      // Pausing focus time
-      if (this.isOnFocus && this.isPlaying) {
-        this.isOnFocus = false;
-        this.isOnRest = true;
-      }
-
-      // Pausing rest time
-      if (this.isOnRest && this.isPlaying) {
-        this.isOnRest = false;
-        this.isOnFocus = true;
-      }
-
-      this.isPlaying = !this.isPlaying;
     },
     changeActiveStep(step: ActiveStep) {
       this.activeStep = step;
+    },
+    showRestStep() {
+      this.isOnFocus = false;
+      this.isOnRest = true;
     },
   },
 });
