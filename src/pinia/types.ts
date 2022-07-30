@@ -1,0 +1,10 @@
+export type ActiveStep = "time-config" | "time-running" | "time-finished";
+
+export interface AppState {
+  focusTime: number;
+  restTime: number;
+  activeStep: ActiveStep;
+  isPlaying: boolean;
+  isOnFocus: boolean;
+  isOnRest: boolean;
+}

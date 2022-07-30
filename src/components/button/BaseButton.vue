@@ -3,12 +3,11 @@ import { computed } from "vue";
 import type { ButtonSize, ButtonType } from "./types";
 
 type Props = {
-  text?: string;
-  type: ButtonType;
-  size: ButtonSize;
-  disabled: boolean;
-  isLoading: boolean;
-  icon: string;
+  text: string;
+  type?: ButtonType;
+  size?: ButtonSize;
+  disabled?: boolean;
+  icon?: string;
 };
 
 const props = withDefaults(defineProps<Props>(), {
@@ -16,7 +15,6 @@ const props = withDefaults(defineProps<Props>(), {
   type: "primary",
   size: "large",
   disabled: false,
-  isLoading: false,
   icon: "",
 });
 
@@ -26,7 +24,7 @@ const sizeClass = computed(() => `btn--${props.size}`);
 
 <template>
   <button :class="['btn', typeClass, sizeClass]">
-    <span>{{ text }}</span>
+    <span class="btn-text">{{ text }}</span>
     <font-awesome-icon v-if="icon" :icon="props.icon" />
   </button>
 </template>
@@ -36,7 +34,7 @@ const sizeClass = computed(() => `btn--${props.size}`);
 .btn {
   width: 15rem;
   height: 4rem;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   box-shadow: $shadow;
   justify-self: center;
   display: flex;
@@ -77,16 +75,22 @@ const sizeClass = computed(() => `btn--${props.size}`);
     }
   }
 
-  span {
+  .btn-text {
     font-size: 1.6rem;
   }
 
-  &--small {
+  &--large {
+    font-size: 1rem;
     width: 10rem;
-    height: 3rem;
+    height: 3.5rem;
+  }
 
-    span {
-      font-size: 1.3rem;
+  &--small {
+    width: 7rem;
+    height: 2.5rem;
+
+    .btn-text {
+      font-size: 1.2rem;
     }
   }
 

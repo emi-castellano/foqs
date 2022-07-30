@@ -2,6 +2,8 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { createPinia } from "pinia";
+import "./assets/main.scss";
 
 import {
   faPlay,
@@ -21,6 +23,8 @@ library.add(
   faPause
 );
 
-import "./assets/main.scss";
+const pinia = createPinia();
+const app = createApp(App);
 
-createApp(App).component("font-awesome-icon", FontAwesomeIcon).mount("#app");
+app.use(pinia);
+app.component("font-awesome-icon", FontAwesomeIcon).mount("#app");

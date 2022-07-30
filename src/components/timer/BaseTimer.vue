@@ -1,21 +1,69 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { useAppStore } from "@/pinia/appStore";
+import { storeToRefs } from "pinia";
+import { computed, onMounted, ref, toRefs } from "vue";
 import BaseButton from "../button/BaseButton.vue";
 
-const playing = ref(false);
-const shadowClass = computed(() => (playing.value ? "shadow" : ""));
-const animationPausedClass = computed(() => (!playing.value ? "paused" : ""));
-const buttonText = computed(() => (playing.value ? "Stop" : "Start"));
+const appStore = useAppStore();
+const time = ref(appStore.focusTime * 60);
+const timer = ref(0);
+
+const playingClass = computed(() => (appStore.isPlaying ? "playing" : ""));
+const animationPausedClass = computed(() =>
+  !appStore.isPlaying ? "paused" : ""
+);
+const buttonText = computed(() => (appStore.isPlaying ? "Stop" : "Start"));
+const timeTypeText = computed(() => {
+  if (appStore.isOnFocus) {
+    return "Time to focus";
+  } else if (appStore.isOnRest) {
+    return "Time to rest";
+  } else {
+    return "All set";
+  }
+});
+
+const timeLeftText = computed(() => {
+  const minutes = Math.floor(time.value / 60);
+  const seconds = time.value % 60;
+
+  return `${minutes < 10 ? "0" : ""}${minutes}:${
+    seconds < 10 ? "0" : ""
+  }${seconds}`;
+});
 
 const onClick = () => {
-  playing.value = !playing.value;
+  appStore.toggleIsPlaying();
+  if (appStore.isPlaying) {
+    startTimer();
+  } else {
+    stopTimer();
+  }
+};
+
+const startTimer = () => {
+  if (!timer.value) {
+    timer.value = setInterval(() => {
+      if (time.value > 0) {
+        time.value--;
+      } else {
+        clearInterval(timer.value);
+      }
+    }, 1000);
+  }
+};
+
+const stopTimer = () => {
+  clearInterval(timer.value);
+  timer.value = 0;
 };
 </script>
 
 <template>
   <div class="base-timer">
-    <div :class="['time-info', shadowClass]">
-      <span class="time-left">00:00</span>
+    <div :class="['time-info', playingClass]">
+      <span class="time-type">{{ timeTypeText }}</span>
+      <h2 class="time-left">{{ timeLeftText }}</h2>
       <BaseButton size="small" :text="buttonText" @click="onClick" />
     </div>
     <span :class="['wave-1', animationPausedClass]"></span>
@@ -59,14 +107,23 @@ $circleSize: 350px;
     box-shadow: $shadow;
     position: relative;
     border: none;
+    transition: all 0.3s ease-in-out;
+
+    .time-type {
+      color: $greyDark2;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2rem;
+    }
 
     .time-left {
       font-size: 4.5rem;
       color: $greyDark2;
       font-weight: 500;
     }
-    &.shadow {
+    &.playing {
       box-shadow: $innerShadow;
+      transform: scale(1.2);
     }
 
     .play {
@@ -83,8 +140,8 @@ $circleSize: 350px;
   .wave-2 {
     grid-row: 1 / 2;
     grid-column: 1 / 2;
-    width: $circleSize - 50;
-    height: $circleSize - 50;
+    width: $circleSize - 50px;
+    height: $circleSize - 50px;
     border-radius: 50%;
     filter: blur(1px);
     z-index: 100;

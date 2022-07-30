@@ -1,17 +1,15 @@
 <script setup lang="ts">
-import { ref } from "vue";
 import TimeConfiguration from "./components/time-config/TimeConfiguration.vue";
 import TimeRunning from "./components/time-running/TimeRunning.vue";
+import { useAppStore } from "./pinia/appStore";
 
-type ActiveStep = "time-config" | "time-running" | "time-finished";
-
-const activeStep = ref<ActiveStep>("time-running");
+const appStore = useAppStore();
 </script>
 
 <template>
   <main>
-    <TimeConfiguration v-if="activeStep === 'time-config'" />
-    <TimeRunning v-if="activeStep === 'time-running'" />
+    <TimeConfiguration v-if="appStore.activeStep === 'time-config'" />
+    <TimeRunning v-if="appStore.activeStep === 'time-running'" />
   </main>
 </template>
 
