@@ -1,7 +1,5 @@
 import { defineStore } from "pinia";
-import type { AppState } from "./types";
-
-export type ActiveStep = "time-config" | "time-running" | "time-finished";
+import type { ActiveStep, AppState } from "./types";
 
 export const useAppStore = defineStore("appStore", {
   state: (): AppState => ({
@@ -11,12 +9,12 @@ export const useAppStore = defineStore("appStore", {
     isPlaying: false,
     isOnFocus: false,
     isOnRest: false,
+    animationState: "default",
+    hasFinished: false,
   }),
   getters: {
     isReadyToStart: (state) =>
       !state.isPlaying && !state.isOnFocus && !state.isOnRest,
-    isFocusTimeRunning: (state) => state.isOnFocus && state.isPlaying,
-    isRestTimeRunning: (state) => state.isOnRest && state.isPlaying,
   },
   actions: {
     setTimeValues(focusTime: number, restTime: number) {
@@ -25,20 +23,31 @@ export const useAppStore = defineStore("appStore", {
     },
     stopPlaying() {
       this.isPlaying = false;
+      this.animationState = "paused";
     },
     startPlaying() {
-      this.isPlaying = true;
-
       if (this.isReadyToStart && !this.isPlaying) {
         this.isOnFocus = true;
       }
+      this.animationState = "playing";
+      this.isPlaying = true;
     },
     changeActiveStep(step: ActiveStep) {
       this.activeStep = step;
     },
     showRestStep() {
       this.isOnFocus = false;
+      this.animationState = "default";
       this.isOnRest = true;
+      console.log("=> this.animationState", this.animationState);
+    },
+    finish() {
+      this.isOnRest = false;
+      this.isOnFocus = false;
+      this.animationState = "default";
+      this.hasFinished = true;
+      this.focusTime = 0;
+      this.restTime = 0;
     },
   },
 });

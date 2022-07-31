@@ -2,22 +2,20 @@
 import { useAppStore } from "@/pinia/appStore";
 import { computed, onUnmounted, ref } from "vue";
 import BaseButton from "../button/BaseButton.vue";
+import timeFinishedAudioFile from "../../assets/music/time-finished.wav";
 
 const appStore = useAppStore();
-const time = ref(
-  appStore.isOnFocus ? appStore.focusTime * 60 : appStore.restTime * 60
-);
+const time = ref(appStore.focusTime * 60);
 const timer = ref(0);
+const timeFinishedAudio = new Audio(timeFinishedAudioFile);
 
 const playingClass = computed(() => (appStore.isPlaying ? "playing" : ""));
 
 const animationPausedClass = computed(() => {
-  if (
-    appStore.isReadyToStart ||
-    (!appStore.isPlaying && appStore.isOnFocus) ||
-    (!appStore.isPlaying && appStore.isOnRest)
-  ) {
+  if (appStore.animationState === "paused") {
     return "paused";
+  } else if (appStore.animationState === "default") {
+    return "default";
   } else {
     return "";
   }
@@ -45,12 +43,12 @@ const timeLeftText = computed(() => {
 });
 
 const onClick = () => {
-  if (appStore.isPlaying) {
-    stopTimer();
-    appStore.stopPlaying();
-  } else {
+  if (!appStore.isPlaying) {
     startTimer();
     appStore.startPlaying();
+  } else {
+    stopTimer();
+    appStore.stopPlaying();
   }
 };
 
@@ -61,7 +59,14 @@ const startTimer = () => {
         time.value--;
       } else {
         stopTimer();
-        appStore.showRestStep();
+        if (appStore.isOnFocus) {
+          appStore.showRestStep();
+          time.value = appStore.focusTime * 60;
+          timeFinishedAudio.play();
+        } else {
+          appStore.finish();
+          timeFinishedAudio.play();
+        }
       }
     }, 1000);
   }
@@ -93,7 +98,7 @@ onUnmounted(() => {
 <style scoped lang="scss">
 @import "../../assets/colors.scss";
 
-$circleSize: 350px;
+$circleSize: 23rem;
 .base-timer {
   border: none;
   background: $greyLight;
@@ -159,8 +164,8 @@ $circleSize: 350px;
   .wave-2 {
     grid-row: 1 / 2;
     grid-column: 1 / 2;
-    width: $circleSize - 50px;
-    height: $circleSize - 50px;
+    width: $circleSize - 3rem;
+    height: $circleSize - 3rem;
     border-radius: 50%;
     filter: blur(1px);
     z-index: 100;
@@ -168,17 +173,21 @@ $circleSize: 350px;
     &.paused {
       animation-play-state: paused;
     }
+
+    &.default {
+      animation: none;
+    }
   }
 
   .wave-1 {
     box-shadow: 0.4rem 0.4rem 0.8rem $greyLight2, -0.4rem -0.4rem 0.8rem $white;
     background: linear-gradient(to bottom right, $greyLight2 0%, $white 100%);
-    animation: waves 4s linear infinite;
+    animation: waves 3.5s linear infinite;
   }
 
   .wave-2 {
     box-shadow: 0.4rem 0.4rem 0.8rem $greyLight2, -0.4rem -0.4rem 0.8rem $white;
-    animation: waves 4s linear 2s infinite;
+    animation: waves 3.5s linear 2s infinite;
   }
 }
 @keyframes waves {

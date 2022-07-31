@@ -7,4 +7,8 @@ export interface AppState {
   isPlaying: boolean;
   isOnFocus: boolean;
   isOnRest: boolean;
+  animationState: AnimationState;
+  hasFinished: boolean;
 }
+
+export type AnimationState = "default" | "playing" | "paused";

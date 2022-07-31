@@ -8,16 +8,12 @@ const appStore = useAppStore();
 const titleText = computed(() => {
   if (appStore.isReadyToStart) {
     return "Are you ready to be productive?";
-  } else if (appStore.isFocusTimeRunning) {
+  } else if (appStore.isOnFocus) {
     return "Time to focus, hope you can make good progress!";
-  } else if (!appStore.isFocusTimeRunning) {
-    return "When you are ready again, start your focus timer!";
-  } else if (appStore.isRestTimeRunning) {
+  } else if (appStore.isOnRest) {
     return "Time to rest, take a break!";
-  } else if (!appStore.isRestTimeRunning) {
-    return "When you are ready again, start your rest timer!";
   } else {
-    return "All set, you are done!";
+    return "";
   }
 });
 </script>
@@ -26,7 +22,8 @@ const titleText = computed(() => {
   <section class="time-running">
     <h1>{{ titleText }}</h1>
     <div class="timer-wrapper">
-      <BaseTimer />
+      <BaseTimer v-if="!appStore.hasFinished" />
+      <span v-else>FINISHED</span>
     </div>
     <div class="music-wrapper">
       <!-- <span>Listening - Bioneuronal song</span> -->
