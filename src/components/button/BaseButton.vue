@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed } from "vue";
 import type { ButtonSize, ButtonType } from "./types";
 
 type Props = {
@@ -8,7 +7,7 @@ type Props = {
   disabled?: boolean;
 };
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   text: "",
   type: "primary",
   size: "large",

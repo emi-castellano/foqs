@@ -6,9 +6,32 @@ import timeFinishedAudioFile from "../../assets/music/time-finished.wav";
 import { AnimationState } from "@/pinia/types";
 
 const appStore = useAppStore();
-const time = ref(appStore.focusTime * 60);
 const timer = ref(0);
 const timeFinishedAudio = new Audio(timeFinishedAudioFile);
+const timerRunning = ref(false);
+const minutes = ref(appStore.focusTime * 60);
+const seconds = ref(0);
+let timerInterval = 0;
+
+const startTimer = () => {
+  if (!timerRunning.value) {
+    timerRunning.value = true;
+    // @ts-ignore
+    timerInterval = setInterval(() => {
+      if (seconds.value > 0) {
+        seconds.value--;
+      } else {
+        if (minutes.value > 0) {
+          minutes.value--;
+          seconds.value = 59;
+        } else {
+          stopTimer();
+          timeFinishedAudio.play();
+        }
+      }
+    }, 1000);
+  }
+};
 
 const playingClass = computed(() => (appStore.isPlaying ? "playing" : ""));
 
@@ -35,12 +58,10 @@ const timeTypeText = computed(() => {
 });
 
 const timeLeftText = computed(() => {
-  const minutes = Math.floor(time.value / 60);
-  const seconds = time.value % 60;
+  const mins = Math.floor(minutes.value / 60);
+  const sec = seconds.value % 60;
 
-  return `${minutes < 10 ? "0" : ""}${minutes}:${
-    seconds < 10 ? "0" : ""
-  }${seconds}`;
+  return `${mins < 10 ? "0" : ""}${mins}:${sec < 10 ? "0" : ""}${sec}`;
 });
 
 const onClick = () => {
@@ -53,30 +74,13 @@ const onClick = () => {
   }
 };
 
-const startTimer = () => {
-  if (!timer.value) {
-    timer.value = setInterval(() => {
-      if (time.value > 0) {
-        time.value--;
-      } else {
-        stopTimer();
-        if (appStore.isOnFocus) {
-          appStore.showRestStep();
-          time.value = appStore.focusTime * 60;
-          timeFinishedAudio.play();
-        } else {
-          appStore.finish();
-          timeFinishedAudio.play();
-        }
-      }
-    }, 1000);
-  }
-};
-
 const stopTimer = () => {
-  appStore.stopPlaying();
-  clearInterval(timer.value);
-  timer.value = 0;
+  if (timerRunning.value) {
+    appStore.stopPlaying();
+    clearInterval(timerInterval);
+    timerInterval = 0;
+    timerRunning.value = false;
+  }
 };
 
 onUnmounted(() => {
