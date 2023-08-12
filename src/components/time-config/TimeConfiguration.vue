@@ -70,12 +70,11 @@ const onRestTimeChange = (event: Event) => {
     <div class="time-values">
       <div class="time-column">
         <label class="time-label" for="focus-time">Focus time</label>
-        <BaseButton
-          size="round"
-          icon="fa-solid fa-chevron-up"
-          type="secondary"
-          @click="increaseFocusTime"
-        />
+        <BaseButton size="round" type="secondary" @click="increaseFocusTime">
+          <template #icon>
+            <font-awesome-icon icon="fa-solid fa-chevron-up" />
+          </template>
+        </BaseButton>
         <div class="input-wrapper">
           <BaseInput
             type="number"
@@ -89,21 +88,19 @@ const onRestTimeChange = (event: Event) => {
           />
           <span class="time-unit">minutes</span>
         </div>
-        <BaseButton
-          size="round"
-          icon="fa-solid fa-chevron-down"
-          type="secondary"
-          @click="decreaseFocusTime"
-        />
+        <BaseButton size="round" type="secondary" @click="decreaseFocusTime">
+          <template #icon>
+            <font-awesome-icon icon="fa-solid fa-chevron-down" />
+          </template>
+        </BaseButton>
       </div>
       <div class="time-column">
         <label class="time-label" for="focus-time">Rest time</label>
-        <BaseButton
-          size="round"
-          icon="fa-solid fa-chevron-up"
-          type="secondary"
-          @click="increaseRestTime"
-        />
+        <BaseButton size="round" type="secondary" @click="increaseRestTime">
+          <template #icon>
+            <font-awesome-icon icon="fa-solid fa-chevron-up" />
+          </template>
+        </BaseButton>
         <div class="input-wrapper">
           <BaseInput
             type="number"
@@ -117,18 +114,19 @@ const onRestTimeChange = (event: Event) => {
           />
           <span class="time-unit">minutes</span>
         </div>
-        <BaseButton
-          size="round"
-          icon="fa-solid fa-chevron-down"
-          type="secondary"
-          @click="decreaseRestTime"
-        />
+        <BaseButton size="round" type="secondary" @click="decreaseRestTime">
+          <template #icon>
+            <font-awesome-icon icon="fa-solid fa-chevron-down" />
+          </template>
+        </BaseButton>
       </div>
     </div>
     <div class="error-wrapper">
       <span class="" v-if="errorText">{{ errorText }}</span>
     </div>
-    <BaseButton text="Start" type="primary" @click="onClick" />
+    <BaseButton type="primary" @click="onClick">
+      <template #text>Start</template>
+    </BaseButton>
   </section>
 </template>
 

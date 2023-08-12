@@ -89,7 +89,11 @@ onUnmounted(() => {
     <div :class="['time-info', playingClass]">
       <span class="time-type">{{ timeTypeText }}</span>
       <h2 class="time-left">{{ timeLeftText }}</h2>
-      <BaseButton size="small" :text="buttonText" @click="onClick" />
+      <BaseButton size="small" @click="onClick">
+        <template #text>
+          {{ buttonText }}
+        </template>
+      </BaseButton>
     </div>
     <span :class="['wave-1', animationPausedClass]"></span>
     <span :class="['wave-2', animationPausedClass]"></span>
