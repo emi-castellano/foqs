@@ -8,10 +8,20 @@ const appStore = useAppStore();
 </script>
 
 <template>
-  <main>
+  <main class="main-content">
     <TimeConfiguration v-if="appStore.activeStep === ActiveStep.TimeConfig" />
     <TimeRunning v-if="appStore.activeStep === ActiveStep.TimeRunning" />
   </main>
 </template>
 
-<style scoped></style>
+<style scoped lang="scss">
+@import "./assets/variables.scss";
+
+.main-content {
+  padding: 0 1.5rem;
+
+  @media (min-width: $tablet) {
+    padding: 0;
+  }
+}
+</style>

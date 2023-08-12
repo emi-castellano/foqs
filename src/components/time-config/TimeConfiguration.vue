@@ -26,10 +26,18 @@ const onClick = () => {
 };
 
 const increaseFocusTime = () => focusTime.value++;
-const decreaseFocusTime = () => focusTime.value--;
+const decreaseFocusTime = () => {
+  if (focusTime.value === 0) return;
+
+  focusTime.value--;
+};
 
 const increaseRestTime = () => restTime.value++;
-const decreaseRestTime = () => restTime.value--;
+const decreaseRestTime = () => {
+  if (restTime.value === 0) return;
+
+  restTime.value--;
+};
 
 const onFocusTimeChange = (event: Event) => {
   const value = (event.target as HTMLInputElement).value;
@@ -64,9 +72,7 @@ const onRestTimeChange = (event: Event) => {
 
 <template>
   <section class="time-config">
-    <h1>
-      <strong>Before starting</strong>, please set your focus and rest time.
-    </h1>
+    <h1>Before starting, please set your focus and rest time.</h1>
     <div class="time-values">
       <div class="time-column">
         <label class="time-label" for="focus-time">Focus time</label>
@@ -132,6 +138,7 @@ const onRestTimeChange = (event: Event) => {
 
 <style scoped lang="scss">
 @import "../../assets/colors.scss";
+@import "../../assets/variables.scss";
 .time-config {
   display: flex;
   flex-direction: column;
@@ -141,7 +148,12 @@ const onRestTimeChange = (event: Event) => {
     display: flex;
     justify-content: center;
     margin-top: 2rem;
-    gap: 6rem;
+    gap: 3rem;
+
+    @media (min-width: $tablet) {
+      gap: 6rem;
+    }
+
     .time-column {
       display: flex;
       align-items: center;

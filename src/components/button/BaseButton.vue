@@ -15,17 +15,10 @@ const props = withDefaults(defineProps<Props>(), {
   disabled: false,
   icon: "",
 });
-
-const typeClass = computed(() => `btn--${props.type}`);
-const sizeClass = computed(() => `btn--${props.size}`);
 </script>
 
 <template>
-  <button
-    :class="['btn', typeClass, sizeClass]"
-    :data-type="type"
-    :data-size="size"
-  >
+  <button class="base-btn" :data-type="type" :data-size="size">
     <slot name="text"></slot>
     <slot name="icon"></slot>
   </button>
@@ -33,7 +26,7 @@ const sizeClass = computed(() => `btn--${props.size}`);
 
 <style scoped lang="scss">
 @import "../../assets/colors.scss";
-.btn {
+.base-btn {
   width: 15rem;
   height: 4rem;
   border-radius: 0.5rem;
