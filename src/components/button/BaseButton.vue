@@ -3,7 +3,7 @@ import { computed } from "vue";
 import type { ButtonSize, ButtonType } from "./types";
 
 type Props = {
-  text: string;
+  text?: string;
   type?: ButtonType;
   size?: ButtonSize;
   disabled?: boolean;

@@ -6,16 +6,57 @@ import { ref } from "vue";
 
 const appStore = useAppStore();
 
-const focusTime = ref(null);
-const restTime = ref(null);
-const showError = ref(false);
+const focusTime = ref(0);
+const restTime = ref(0);
+const errorText = ref("");
 
 const onClick = () => {
   if (focusTime.value && restTime.value) {
-    appStore.setTimeValues(Number(focusTime.value), Number(restTime.value));
-    appStore.changeActiveStep("time-running");
+    if (restTime.value > focusTime.value) {
+      errorText.value = "Rest time must be less than focus time.";
+    } else {
+      appStore.setTimeValues(Number(focusTime.value), Number(restTime.value));
+      appStore.changeActiveStep("time-running");
+      errorText.value = "";
+    }
   } else {
-    showError.value = true;
+    errorText.value = "Focus and rest time must be set before starting.";
+  }
+};
+
+const increaseFocusTime = () => focusTime.value++;
+const decreaseFocusTime = () => focusTime.value--;
+
+const increaseRestTime = () => restTime.value++;
+const decreaseRestTime = () => restTime.value--;
+
+const onFocusTimeChange = (event: Event) => {
+  const value = (event.target as HTMLInputElement).value;
+
+  if (value) {
+    const number = Number(value);
+
+    if (number <= 60) {
+      focusTime.value = number;
+      errorText.value = "";
+    } else {
+      errorText.value = "Focus time must be less than 60.";
+    }
+  }
+};
+
+const onRestTimeChange = (event: Event) => {
+  const value = (event.target as HTMLInputElement).value;
+
+  if (value) {
+    const number = Number(value);
+
+    if (number <= 15) {
+      restTime.value = number;
+      errorText.value = "";
+    } else {
+      errorText.value = "Rest time must be less than 15.";
+    }
   }
 };
 </script>
@@ -32,6 +73,7 @@ const onClick = () => {
           size="round"
           icon="fa-solid fa-chevron-up"
           type="secondary"
+          @click="increaseFocusTime"
         />
         <div class="input-wrapper">
           <BaseInput
@@ -41,7 +83,8 @@ const onClick = () => {
             :max-length="2"
             :min="20"
             :max="60"
-            placeholder="00"
+            @input="onFocusTimeChange"
+            placeholder="0"
           />
           <span class="time-unit">minutes</span>
         </div>
@@ -49,6 +92,7 @@ const onClick = () => {
           size="round"
           icon="fa-solid fa-chevron-down"
           type="secondary"
+          @click="decreaseFocusTime"
         />
       </div>
       <div class="time-column">
@@ -57,6 +101,7 @@ const onClick = () => {
           size="round"
           icon="fa-solid fa-chevron-up"
           type="secondary"
+          @click="increaseRestTime"
         />
         <div class="input-wrapper">
           <BaseInput
@@ -66,7 +111,8 @@ const onClick = () => {
             :max-length="2"
             :min="5"
             :max="15"
-            placeholder="00"
+            placeholder="0"
+            @input="onRestTimeChange"
           />
           <span class="time-unit">minutes</span>
         </div>
@@ -74,13 +120,12 @@ const onClick = () => {
           size="round"
           icon="fa-solid fa-chevron-down"
           type="secondary"
+          @click="decreaseRestTime"
         />
       </div>
     </div>
     <div class="error-wrapper">
-      <span class="" v-if="showError"
-        >Focus and rest time values must be set before starting.</span
-      >
+      <span class="" v-if="errorText">{{ errorText }}</span>
     </div>
     <BaseButton text="Start" type="primary" @click="onClick" />
   </section>

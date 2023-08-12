@@ -7,7 +7,7 @@ type Props = {
   min?: number;
   max?: number;
   maxLength: number | undefined;
-  disabled: boolean;
+  disabled?: boolean;
   size: InputSize;
   type: InputType;
 };

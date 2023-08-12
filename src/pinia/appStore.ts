@@ -3,9 +3,10 @@ import type { ActiveStep, AppState } from "./types";
 
 export const useAppStore = defineStore("appStore", {
   state: (): AppState => ({
-    focusTime: 1,
-    restTime: 1,
-    activeStep: "time-running",
+    focusTime: 0,
+    restTime: 0,
+    repeatCount: 0,
+    activeStep: "time-config",
     isPlaying: false,
     isOnFocus: false,
     isOnRest: false,
@@ -28,9 +29,13 @@ export const useAppStore = defineStore("appStore", {
     startPlaying() {
       if (this.isReadyToStart && !this.isPlaying) {
         this.isOnFocus = true;
+        this.increaseRepeatCount();
       }
       this.animationState = "playing";
       this.isPlaying = true;
+    },
+    increaseRepeatCount() {
+      this.repeatCount++;
     },
     changeActiveStep(step: ActiveStep) {
       this.activeStep = step;
@@ -48,6 +53,7 @@ export const useAppStore = defineStore("appStore", {
       this.hasFinished = true;
       this.focusTime = 0;
       this.restTime = 0;
+      this.repeatCount = 0;
     },
   },
 });
