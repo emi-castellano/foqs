@@ -6,26 +6,24 @@ import timeFinishedAudioFile from "../../assets/music/time-finished.wav";
 import { AnimationState } from "@/pinia/types";
 
 const appStore = useAppStore();
+const time = ref(appStore.focusTime * 60);
 const timer = ref(0);
 const timeFinishedAudio = new Audio(timeFinishedAudioFile);
-const timerRunning = ref(false);
-const minutes = ref(appStore.focusTime * 60);
-const seconds = ref(0);
-let timerInterval = 0;
 
 const startTimer = () => {
-  if (!timerRunning.value) {
-    timerRunning.value = true;
+  if (!timer.value) {
     // @ts-ignore
-    timerInterval = setInterval(() => {
-      if (seconds.value > 0) {
-        seconds.value--;
+    timer.value = setInterval(() => {
+      if (time.value > 0) {
+        time.value--;
       } else {
-        if (minutes.value > 0) {
-          minutes.value--;
-          seconds.value = 59;
+        stopTimer();
+        if (appStore.isOnFocus) {
+          appStore.showRestStep();
+          time.value = appStore.focusTime * 60;
+          timeFinishedAudio.play();
         } else {
-          stopTimer();
+          appStore.finish();
           timeFinishedAudio.play();
         }
       }
@@ -58,10 +56,12 @@ const timeTypeText = computed(() => {
 });
 
 const timeLeftText = computed(() => {
-  const mins = Math.floor(minutes.value / 60);
-  const sec = seconds.value % 60;
+  const minutes = Math.floor(time.value / 60);
+  const seconds = time.value % 60;
 
-  return `${mins < 10 ? "0" : ""}${mins}:${sec < 10 ? "0" : ""}${sec}`;
+  return `${minutes < 10 ? "0" : ""}${minutes}:${
+    seconds < 10 ? "0" : ""
+  }${seconds}`;
 });
 
 const onClick = () => {
@@ -75,12 +75,9 @@ const onClick = () => {
 };
 
 const stopTimer = () => {
-  if (timerRunning.value) {
-    appStore.stopPlaying();
-    clearInterval(timerInterval);
-    timerInterval = 0;
-    timerRunning.value = false;
-  }
+  appStore.stopPlaying();
+  clearInterval(timer.value);
+  timer.value = 0;
 };
 
 onUnmounted(() => {
