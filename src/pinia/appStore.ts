@@ -1,16 +1,16 @@
 import { defineStore } from "pinia";
-import type { ActiveStep, AppState } from "./types";
+import { ActiveStep, AnimationState, type AppState } from "./types";
 
 export const useAppStore = defineStore("appStore", {
   state: (): AppState => ({
     focusTime: 0,
     restTime: 0,
     repeatCount: 0,
-    activeStep: "time-config",
+    activeStep: ActiveStep.TimeConfig,
     isPlaying: false,
     isOnFocus: false,
     isOnRest: false,
-    animationState: "default",
+    animationState: AnimationState.Default,
     hasFinished: false,
   }),
   getters: {
@@ -24,14 +24,14 @@ export const useAppStore = defineStore("appStore", {
     },
     stopPlaying() {
       this.isPlaying = false;
-      this.animationState = "paused";
+      this.animationState = AnimationState.Paused;
     },
     startPlaying() {
       if (this.isReadyToStart && !this.isPlaying) {
         this.isOnFocus = true;
         this.increaseRepeatCount();
       }
-      this.animationState = "playing";
+      this.animationState = AnimationState.Playing;
       this.isPlaying = true;
     },
     increaseRepeatCount() {
@@ -42,14 +42,14 @@ export const useAppStore = defineStore("appStore", {
     },
     showRestStep() {
       this.isOnFocus = false;
-      this.animationState = "default";
+      this.animationState = AnimationState.Default;
       this.isOnRest = true;
       console.log("=> this.animationState", this.animationState);
     },
     finish() {
       this.isOnRest = false;
       this.isOnFocus = false;
-      this.animationState = "default";
+      this.animationState = AnimationState.Default;
       this.hasFinished = true;
       this.focusTime = 0;
       this.restTime = 0;

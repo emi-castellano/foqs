@@ -1,5 +1,8 @@
-export type ActiveStep = "time-config" | "time-running" | "time-finished";
-
+export enum ActiveStep {
+  TimeConfig = "time-config",
+  TimeRunning = "time-running",
+  TimeFinished = "time-finished",
+}
 export interface AppState {
   focusTime: number;
   restTime: number;
@@ -12,4 +15,8 @@ export interface AppState {
   hasFinished: boolean;
 }
 
-export type AnimationState = "default" | "playing" | "paused";
+export enum AnimationState {
+  Default = "default",
+  Playing = "playing",
+  Paused = "paused",
+}

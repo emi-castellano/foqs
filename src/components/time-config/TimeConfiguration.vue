@@ -3,6 +3,7 @@ import BaseInput from "../input/BaseInput.vue";
 import BaseButton from "../button/BaseButton.vue";
 import { useAppStore } from "@/pinia/appStore";
 import { ref } from "vue";
+import { ActiveStep } from "@/pinia/types";
 
 const appStore = useAppStore();
 
@@ -16,7 +17,7 @@ const onClick = () => {
       errorText.value = "Rest time must be less than focus time.";
     } else {
       appStore.setTimeValues(Number(focusTime.value), Number(restTime.value));
-      appStore.changeActiveStep("time-running");
+      appStore.changeActiveStep(ActiveStep.TimeRunning);
       errorText.value = "";
     }
   } else {

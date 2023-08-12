@@ -3,6 +3,7 @@ import { useAppStore } from "@/pinia/appStore";
 import { computed, onUnmounted, ref } from "vue";
 import BaseButton from "../button/BaseButton.vue";
 import timeFinishedAudioFile from "../../assets/music/time-finished.wav";
+import { AnimationState } from "@/pinia/types";
 
 const appStore = useAppStore();
 const time = ref(appStore.focusTime * 60);
@@ -12,9 +13,9 @@ const timeFinishedAudio = new Audio(timeFinishedAudioFile);
 const playingClass = computed(() => (appStore.isPlaying ? "playing" : ""));
 
 const animationPausedClass = computed(() => {
-  if (appStore.animationState === "paused") {
+  if (appStore.animationState === AnimationState.Paused) {
     return "paused";
-  } else if (appStore.animationState === "default") {
+  } else if (appStore.animationState === AnimationState.Default) {
     return "default";
   } else {
     return "";
