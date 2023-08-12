@@ -38,6 +38,10 @@ const titleText = computed(() => {
   align-items: center;
   gap: 10rem;
 
+  h1 {
+    text-align: center;
+  }
+
   .timer-wrapper {
     display: flex;
     flex-direction: column;

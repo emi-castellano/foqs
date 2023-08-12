@@ -144,6 +144,10 @@ const onRestTimeChange = (event: Event) => {
   flex-direction: column;
   align-items: center;
   gap: 4rem;
+
+  h1 {
+    text-align: center;
+  }
   .time-values {
     display: flex;
     justify-content: center;

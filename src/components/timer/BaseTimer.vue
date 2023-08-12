@@ -102,14 +102,16 @@ onUnmounted(() => {
 
 <style scoped lang="scss">
 @import "../../assets/colors.scss";
+@import "../../assets/variables.scss";
 
-$circleSize: 23rem;
+$circleSizeBig: 23rem;
+$circleSizeSmall: 18rem;
+
 .base-timer {
   border: none;
   background: $greyLight;
   grid-column: 2 / 3;
   grid-row: 4 / 6;
-  width: $circleSize;
   height: 100%;
   justify-self: center;
   border-radius: 1rem;
@@ -121,8 +123,8 @@ $circleSize: 23rem;
   .time-info {
     grid-row: 1 / 2;
     grid-column: 1 / 2;
-    width: $circleSize;
-    height: $circleSize;
+    width: $circleSizeSmall;
+    height: $circleSizeSmall;
     display: flex;
     flex-direction: column;
     margin: 0.6rem;
@@ -137,6 +139,11 @@ $circleSize: 23rem;
     position: relative;
     border: none;
     transition: all 0.3s ease-in-out;
+
+    @media (min-width: $tablet) {
+      width: $circleSizeBig;
+      height: $circleSizeBig;
+    }
 
     .time-type {
       color: $greyDark2;
@@ -169,11 +176,16 @@ $circleSize: 23rem;
   .wave-2 {
     grid-row: 1 / 2;
     grid-column: 1 / 2;
-    width: $circleSize - 3rem;
-    height: $circleSize - 3rem;
+    width: $circleSizeSmall - 3rem;
+    height: $circleSizeSmall - 3rem;
     border-radius: 50%;
     filter: blur(1px);
     z-index: 100;
+
+    @media (min-width: $tablet) {
+      width: $circleSizeBig - 3rem;
+      height: $circleSizeBig - 3rem;
+    }
 
     &.paused {
       animation-play-state: paused;
