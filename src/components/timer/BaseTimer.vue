@@ -17,9 +17,9 @@ const animationPausedClass = computed(() => {
     return "paused";
   } else if (appStore.animationState === AnimationState.Default) {
     return "default";
-  } else {
-    return "";
   }
+
+  return "";
 });
 
 const buttonText = computed(() => (appStore.isPlaying ? "Stop" : "Start"));
@@ -29,9 +29,9 @@ const timeTypeText = computed(() => {
     return "Time to focus";
   } else if (appStore.isOnRest) {
     return "Time to rest";
-  } else {
-    return "All set";
   }
+
+  return "All set";
 });
 
 const timeLeftText = computed(() => {

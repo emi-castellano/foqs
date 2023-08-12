@@ -12,9 +12,9 @@ const titleText = computed(() => {
     return "Time to focus, hope you can make good progress!";
   } else if (appStore.isOnRest) {
     return "Time to rest, take a break!";
-  } else {
-    return "";
   }
+
+  return "";
 });
 </script>
 

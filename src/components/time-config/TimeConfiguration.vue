@@ -131,6 +131,7 @@ const onRestTimeChange = (event: Event) => {
     <BaseButton text="Start" type="primary" @click="onClick" />
   </section>
 </template>
+
 <style scoped lang="scss">
 @import "../../assets/colors.scss";
 .time-config {
