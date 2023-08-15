@@ -130,7 +130,7 @@ const onRestTimeChange = (event: Event) => {
     <div class="error-wrapper">
       <span class="" v-if="errorText">{{ errorText }}</span>
     </div>
-    <BaseButton type="primary" @click="onClick">
+    <BaseButton type="primary" @click="onClick" class="start-btn">
       <template #text>Start</template>
     </BaseButton>
   </section>
@@ -189,10 +189,15 @@ const onRestTimeChange = (event: Event) => {
 
   .error-wrapper {
     min-height: 1.5rem;
+    margin-top: 1rem;
 
     span {
       color: red;
     }
+  }
+
+  .start-btn {
+    margin-top: 1rem;
   }
 }
 </style>

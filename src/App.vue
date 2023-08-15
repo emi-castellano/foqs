@@ -11,18 +11,18 @@ const appStore = useAppStore();
   <main class="main-content">
     <TimeConfiguration v-if="appStore.activeStep === ActiveStep.TimeConfig" />
     <TimeRunning v-if="appStore.activeStep === ActiveStep.TimeRunning" />
-    <footer>
-      <span>Made with ❤️ by Emi</span>
-      <span
-        >Credits to
-        <a href="https://codepen.io/myacode" target="_blank">Maria Marin</a> for
-        the
-        <a href="https://codepen.io/myacode/pen/PoqQQNM" target="_blank"
-          >Neumorphic Elements</a
-        ></span
-      >
-    </footer>
   </main>
+  <footer>
+    <span>Made with ❤️ by Emi</span>
+    <span
+      >Credits to
+      <a href="https://codepen.io/myacode" target="_blank">Maria Marin</a> for
+      the
+      <a href="https://codepen.io/myacode/pen/PoqQQNM" target="_blank"
+        >Neumorphic Elements</a
+      ></span
+    >
+  </footer>
 </template>
 
 <style scoped lang="scss">
@@ -30,6 +30,7 @@ const appStore = useAppStore();
 
 .main-content {
   padding: 0 1.5rem;
+  position: relative;
 
   @media (min-width: $tablet) {
     padding: 0;
@@ -37,7 +38,9 @@ const appStore = useAppStore();
 }
 
 footer {
-  margin-top: 4rem;
+  position: absolute;
+  bottom: 20px;
+  font-size: 0.8rem;
   display: flex;
   flex-direction: column;
   text-align: center;
