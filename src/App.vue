@@ -12,7 +12,7 @@ const appStore = useAppStore();
     <TimeConfiguration v-if="appStore.activeStep === ActiveStep.TimeConfig" />
     <TimeRunning v-if="appStore.activeStep === ActiveStep.TimeRunning" />
     <footer>
-      <span>Made with ❤️ - Emi</span>
+      <span>Made with ❤️ by Emi</span>
       <span
         >Credits to
         <a href="https://codepen.io/myacode" target="_blank">Maria Marin</a> for

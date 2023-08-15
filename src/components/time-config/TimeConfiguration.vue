@@ -143,7 +143,11 @@ const onRestTimeChange = (event: Event) => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4rem;
+  gap: 0.5rem;
+
+  @media (min-width: $tablet) {
+    gap: 4rem;
+  }
 
   h1 {
     text-align: center;
@@ -151,10 +155,11 @@ const onRestTimeChange = (event: Event) => {
   .time-values {
     display: flex;
     justify-content: center;
-    margin-top: 2rem;
-    gap: 3rem;
+    margin-top: 1rem;
+    gap: 2rem;
 
     @media (min-width: $tablet) {
+      margin-top: 2rem;
       gap: 6rem;
     }
 
