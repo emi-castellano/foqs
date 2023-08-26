@@ -44,7 +44,10 @@ const props = withDefaults(defineProps<Props>(), {
   border: none;
   border-radius: 0.5rem;
   padding: 0 1rem;
-  box-shadow: $innerShadow;
+  -webkit-box-shadow: inset 0.2rem 0.2rem 0.5rem #888888,
+    inset -0.2rem -0.2rem 0.5rem #ffffff;
+  box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7,
+    inset -0.2rem -0.2rem 0.5rem #ffffff;
   background: none;
   font-family: inherit;
   color: $greyDark;
@@ -55,7 +58,8 @@ const props = withDefaults(defineProps<Props>(), {
 
   &:focus {
     outline: none;
-    box-shadow: $shadow;
+    box-shadow: 0.2rem 0.2rem 0.5rem #c8d0e7;
+    -webkit-box-shadow: 0.2rem 0.2rem 0.5rem #c8d0e7;
   }
 
   &::-webkit-outer-spin-button,
