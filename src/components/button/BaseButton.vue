@@ -77,9 +77,9 @@ withDefaults(defineProps<Props>(), {
   }
 
   &[data-size="small"] {
-    width: 7rem;
-    height: 2.5rem;
-    font-size: 1.2rem;
+    width: 4rem;
+    height: 2rem;
+    font-size: 1rem;
   }
 
   &[data-size="round"] {

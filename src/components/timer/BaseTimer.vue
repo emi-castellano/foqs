@@ -106,7 +106,7 @@ onUnmounted(() => {
 @import "../../assets/variables.scss";
 
 $circleSizeBig: 23rem;
-$circleSizeSmall: 18rem;
+$circleSizeSmall: 14rem;
 
 .base-timer {
   border: none;
@@ -150,13 +150,22 @@ $circleSizeSmall: 18rem;
       color: $greyDark2;
       font-size: 1rem;
       text-transform: uppercase;
-      letter-spacing: 0.2rem;
+      letter-spacing: 1px;
+      font-weight: 300;
+
+      @media (min-width: $tablet) {
+        font-size: 20px;
+      }
     }
 
     .time-left {
-      font-size: 4.5rem;
+      font-size: 2.5rem;
       color: $greyDark2;
       font-weight: 500;
+
+      @media (min-width: $tablet) {
+        font-size: 4.5rem;
+      }
     }
     &.playing {
       box-shadow: $innerShadow;

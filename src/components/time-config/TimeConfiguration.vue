@@ -72,7 +72,7 @@ const onRestTimeChange = (event: Event) => {
 
 <template>
   <section class="time-config">
-    <h1>Before starting, please set your focus and rest time.</h1>
+    <h1>Configure your productive session</h1>
     <div class="time-values">
       <div class="time-column">
         <label class="time-label" for="focus-time">Focus time</label>
@@ -170,7 +170,7 @@ const onRestTimeChange = (event: Event) => {
       align-items: center;
       text-align: center;
       flex-direction: column;
-      gap: 1.6rem;
+      gap: 1rem;
 
       .input-wrapper {
         display: flex;
@@ -184,7 +184,7 @@ const onRestTimeChange = (event: Event) => {
       }
       .time-label {
         font-size: 1.2rem;
-        font-weight: 400;
+        font-weight: 300;
       }
     }
   }
