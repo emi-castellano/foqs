@@ -144,9 +144,11 @@ const onRestTimeChange = (event: Event) => {
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+  height: 80vh;
 
   @media (min-width: $tablet) {
     gap: 4rem;
+    height: auto;
   }
 
   h1 {
